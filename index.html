@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Sarabun (TH Sarabun PSK equivalent) -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to fine-tune the layout and printing */
+        body {
+            font-family: 'Sarabun', sans-serif; /* Using Sarabun font as requested */
+            -webkit-print-color-adjust: exact; /* Ensure background colors and images are printed */
+            print-color-adjust: exact; /* Standard property for color adjustment when printing */
+            /* Removed 'color-adjust: exact;' as it's not a standard CSS property */
+        }
+        .form-container {
+            max-width: 210mm; /* A4 width */
+            margin: 20px auto;
+            padding: 20mm; /* A4 margins */
+            border: 1px solid #ddd;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        /* General form field styling for inputs and checkboxes */
+        .form-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .form-field label {
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        .form-field input[type="text"],
+        .form-field input[type="number"],
+        textarea { /* Apply Sarabun to textarea as well */
+            font-family: 'Sarabun', sans-serif; /* Ensure input fields use Sarabun */
+            flex-grow: 1;
+            border: none;
+            border-bottom: 1px solid #333;
+            padding: 2px 0;
+            outline: none;
+            border-radius: 0; /* No rounded corners for input lines */
+        }
+        .form-checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+            border-radius: 4px; /* Rounded corners for checkboxes */
+        }
+        .dotted-line {
+            border-bottom: 1px dotted #000;
+            flex-grow: 1;
+            margin-left: 5px;
+        }
+        .signature-line {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 50px;
+        }
+        .signature-line .line {
+            border-bottom: 1px solid #000;
+            width: 250px;
+            margin-left: 10px;
+        }
+
+        /* Print specific styles */
+        @media print {
+            /* Attempt to remove browser headers/footers */
+            @page {
+                margin: 0; /* Set all margins to 0 for the print page */
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 10pt; /* Smaller font size for printing to fit more content */
+            }
+            .form-container {
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                padding: 10mm; /* Reduced padding for printing to fit more content */
+                width: 210mm; /* A4 width */
+                min-height: 297mm; /* A4 height */
+            }
+            /* Reduce margins for various elements when printing */
+            .text-right.mb-8 { margin-bottom: 5mm; }
+            h1 { margin-bottom: 5mm; }
+            .mb-6 { margin-bottom: 5mm; }
+            .mb-4 { margin-bottom: 3mm; }
+            .mb-3 { margin-bottom: 3mm; }
+            .form-field { margin-bottom: 3mm; }
+            .flex.items-center.mb-2 { margin-bottom: 3mm; }
+            /* Adjusted margin-top for signature lines in print to bring it up */
+            .signature-line { margin-top: 5mm; } 
+
+            .print-button-container {
+                display: none; /* Hide print button when printing */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="form-container">
+        <!-- Date section -->
+        <div class="text-right text-sm mb-8">
+            <span>วันที่</span>
+            <input type="text" class="inline-block w-20 border-b border-gray-400 text-center">
+            <span>/เดือน/</span>
+            <input type="text" class="inline-block w-20 border-b border-gray-400 text-center">
+            <span>/ปี</span>
+            <input type="text" class="inline-block w-20 border-b border-gray-400 text-center">
+        </div>
+
+        <h1 class="text-lg font-bold text-center mb-6">แบบฟอร์มการเก็บข้อมูลเหตุผลการลาออกหรือย้ายสาขา</h1>
+
+        <!-- Explanation section -->
+        <div class="mb-6">
+            <p class="text-sm font-semibold mb-2">คำชี้แจง: ข้อมูลจะถูกนำไปใช้เฉพาะเจาะจงในการดำเนินการตามคำขอการลาออกหรือย้ายสาขาที่ได้แจ้งไว้ข้างต้นเท่านั้น ข้อมูลจะถูกเก็บรักษาตามนโยบายความเป็นส่วนตัวของมหาวิทยาลัยและจะไม่ถูกเปิดเผยแก่บุคคลภายนอก</p>
+        </div>
+
+        <!-- Purpose and academic year section -->
+        <div class="mb-6">
+            <div class="flex items-center mb-4">
+                <span class="font-bold mr-4">ท่านมีความประสงค์</span>
+                <label class="inline-flex items-center mr-6">
+                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                    <span class="ml-2">ขอลาออก</span>
+                </label>
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                    <span class="ml-2">ขอย้ายสาขา</span>
+                </label>
+            </div>
+            <div class="flex items-center mb-4">
+                <span class="mr-2">ภาคเรียนที่</span>
+                <input type="number" class="w-12 border-b border-gray-400 text-center rounded-none">
+                <span class="ml-4 mr-2">ปีการศึกษา</span>
+                <input type="number" class="w-20 border-b border-gray-400 text-center rounded-none">
+            </div>
+        </div>
+
+        <!-- Personal information section -->
+        <div class="mb-6">
+            <h2 class="font-bold mb-3">ข้อมูลส่วนบุคคล:</h2>
+            <ul class="list-none pl-0">
+                <li class="form-field">
+                    <label class="flex-shrink-0">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">รอบ TCAS ที่นิสิตเข้าศึกษา</span>
+                    </label>
+                    <label class="inline-flex items-center ml-4">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">รอบที่ 1 Portfolio</span>
+                    </label>
+                    <label class="inline-flex items-center ml-4">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">รอบที่ 2 Quota</span>
+                    </label>
+                </li>
+                <li class="form-field ml-6">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">รอบที่ 3 Admission</span>
+                    </label>
+                    <label class="inline-flex items-center ml-4">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">รอบที่ 4 Direct Admission</span>
+                    </label>
+                    <label class="inline-flex items-center ml-4">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">รอบอื่นๆ ระบุ</span>
+                    </label>
+                    <input type="text" class="flex-grow ml-2 w-full">
+                </li>
+                <li class="form-field">
+                    <span class="mr-2">&bull; ปีการศึกษาที่เข้า:</span>
+                    <input type="text" class="flex-grow">
+                </li>
+                <li class="form-field">
+                    <span class="mr-2">&bull; รหัสนิสิต:</span>
+                    <input type="text" class="flex-grow">
+                </li>
+                <li class="form-field">
+                    <span class="mr-2">&bull; สาขาวิชาเดิม (กรณีที่ย้ายสาขาวิชา):</span>
+                    <input type="text" class="flex-grow">
+                </li>
+                <li class="form-field">
+                    <span class="mr-2">&bull; สาขาวิชาที่ย้ายไป:</span>
+                    <input type="text" class="flex-grow">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Student reasons section -->
+        <div class="mb-6">
+            <h2 class="font-bold mb-3">เหตุผลของนิสิต (ตอบได้มากกว่า 1 ข้อ)</h2>
+            <ul class="list-none pl-0">
+                <!-- ปัญหาการเงิน -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาการเงิน :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาสุขภาพ (Main) -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาสุขภาพ :</span>
+                    </label>
+                </li>
+                <!-- ปัญหาสุขภาพทางกาย (Sub-item) -->
+                <li class="flex items-center mb-2 ml-8">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาสุขภาพทางกาย</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาสุขภาพจิต (Sub-item) -->
+                <li class="flex items-center mb-2 ml-8">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาสุขภาพจิต</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาด้านครอบครัว -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาด้านครอบครัว :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาทางการเรียน -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาทางการเรียน :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ต้องการเปลี่ยน สถานศึกษา -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ต้องการเปลี่ยน สถานศึกษา :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาทางสังคม -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาทางสังคม :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- การปรับปรุงต่อสภาพแวดล้อมสังคม -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">การปรับปรุงต่อสภาพแวดล้อมสังคม :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาส่วนตัว -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาส่วนตัว :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+                <!-- ปัญหาอื่น ๆ (โปรดระบุ) -->
+                <li class="flex items-center mb-2">
+                    <label class="inline-flex items-center flex-shrink-0 mr-2">
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                        <span class="ml-2">ปัญหาอื่น ๆ (โปรดระบุ) :</span>
+                    </label>
+                    <input type="text" class="flex-grow border-b border-gray-400">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Advisor's comments section -->
+        <div class="mb-8">
+            <h2 class="font-bold mb-2">ความคิดเห็นอาจารย์ที่ปรึกษา</h2>
+            <div class="flex flex-col gap-2">
+                <input type="text" class="w-full border-b border-gray-400 p-2 rounded-none focus:outline-none focus:ring-2 focus:ring-blue-500" >
+            </div>
+        </div>
+
+        <!-- Signature lines -->
+        
+        <div class="signature-line">
+            <span class="mr-2">(...................................................)</span>
+        </div>
+    </div>
+    <!-- Print button -->
+     <br>
+    <div class="print-button-container flex justify-center mt-6">
+        <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+            พิมพ์เป็น PDF
+        </button>
+    </div>
+
+    
+</body>
+</html>
